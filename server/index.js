@@ -3,6 +3,7 @@ const express = require('express');
 const passport = require('passport');
 const GitHubStrategy = require('passport-github').Strategy;
 const BearerStrategy = require('passport-http-bearer').Strategy;
+// const {DATABSE} = require('')
 
 let secret = {
   CLIENT_ID: process.env.CLIENT_ID,
@@ -10,7 +11,7 @@ let secret = {
 }
 
 if(process.env.NODE_ENV != 'production') {
-  secret = require('./secret');
+  secret = require('./config/secret');
 }
 
 const app = express();
