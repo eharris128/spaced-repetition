@@ -3,15 +3,17 @@ const express = require('express');
 const passport = require('passport');
 const GitHubStrategy = require('passport-github').Strategy;
 const BearerStrategy = require('passport-http-bearer').Strategy;
-// const {DATABSE} = require('')
+const keys = require('./config/keys');
+
+// mongoose.connect(keys.mongoURI);
 
 let secret = {
   CLIENT_ID: process.env.CLIENT_ID,
   CLIENT_SECRET: process.env.CLIENT_SECRET
-}
+};
 
 if(process.env.NODE_ENV != 'production') {
-  secret = require('./config/secret');
+  secret = require('./config/keys');
 }
 
 const app = express();
