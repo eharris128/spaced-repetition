@@ -11,7 +11,10 @@
     "dev:server": "cd server && npm start",
     "install": "run-s install:server install:client",
     "install:server": "cd server && npm install",
-    "install:client": "cd client && npm install"
+    "install:client": "cd client && npm install",
+    "test": "run-s test:server test:client",
+    "test:server": "cd server && npm test",
+    "test:client": "cd client && npm test"
   },
   "cacheDirectories": [
     "node_modules",
