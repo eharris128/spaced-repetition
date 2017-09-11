@@ -30,11 +30,11 @@ passport.use(
     },
     (accessToken, refreshToken, profile, cb) => {
         // Job 1: Set up Mongo/Mongoose, create a User model which store the
-        // google id, and the access token
+        // github id, and the access token
         // Job 2: Update this callback to either update or create the user
         // so it contains the correct access token
         const user = database[accessToken] = {
-            googleId: profile.id,
+            gitHubId: profile.id,
             accessToken: accessToken
         };
         return cb(null, user);
@@ -78,7 +78,7 @@ app.get('/api/auth/logout', (req, res) => {
 app.get('/api/me',
     passport.authenticate('bearer', {session: false}),
     (req, res) => res.json({
-        googleId: req.user.googleId
+        gitHubId: req.user.gitHubId
     })
 );
 
