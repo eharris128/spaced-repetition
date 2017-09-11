@@ -4,7 +4,7 @@ const passport = require('passport');
 const GitHubStrategy = require('passport-github').Strategy;
 const BearerStrategy = require('passport-http-bearer').Strategy;
 const keys = require('./config/keys');
-
+console.log('This is broken');
 // mongoose.connect(keys.mongoURI);
 
 let secret = {
