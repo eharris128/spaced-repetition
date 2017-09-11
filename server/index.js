@@ -4,11 +4,15 @@ const passport = require('passport');
 const GitHubStrategy = require('passport-github').Strategy;
 const BearerStrategy = require('passport-http-bearer').Strategy;
 const keys = require('./config/keys');
-// mongoose.connect(keys.mongoURI);
+const mongoose = require("mongoose");
+
+const { User } = require('./models/users')
+mongoose.connect(keys.MONGO_URI);
 
 let secret = {
   CLIENT_ID: process.env.CLIENT_ID,
-  CLIENT_SECRET: process.env.CLIENT_SECRET
+  CLIENT_SECRET: process.env.CLIENT_SECRET,
+  MONGO_URI: process.env.MONGO_URI
 };
 
 if(process.env.NODE_ENV != 'production') {
@@ -16,9 +20,6 @@ if(process.env.NODE_ENV != 'production') {
 }
 
 const app = express();
-
-const database = {
-};
 
 app.use(passport.initialize());
 
@@ -33,24 +34,44 @@ passport.use(
         // github id, and the access token
         // Job 2: Update this callback to either update or create the user
         // so it contains the correct access token
-        const user = database[accessToken] = {
-            gitHubId: profile.id,
-            accessToken: accessToken
-        };
-        return cb(null, user);
+        // const user = database[accessToken] = {
+        //     gitHubId: profile.id,
+        //     accessToken: accessToken
+        // };
+        
+        // Look to see if user is already in database - could use accessToken
+        User.findOne({accessToken: accessToken})
+            .then( user => {
+                // if the user is there, then return user
+                if (user) {
+                    return cb(null, user);
+                } else {
+                // if the user is not there, then we will create a new user 
+                User.create({
+                    gitHubId: accessToken
+                })
+                }
+            })
+            .then(user => {
+                return cb(null, user);
+            })
+        
     }
 ));
-
 passport.use(
     new BearerStrategy(
         (token, done) => {
             // Job 3: Update this callback to try to find a user with a
             // matching access token.  If they exist, let em in, if not,
             // don't.
-            if (!(token in database)) {
-                return done(null, false);
-            }
-            return done(null, database[token]);
+              User.findOne({accessToken})
+              .then( user => {
+                  if (!user) {
+                    return done(null, false);
+                  } else {
+                    return done(null, user);
+                  }
+              })
         }
     )
 );
@@ -101,6 +122,11 @@ app.get(/^(?!\/api(\/|$))/, (req, res) => {
 let server;
 function runServer(port=3001) {
     return new Promise((resolve, reject) => {
+        mongoose.connect(secret.MONGO_URI, err => {
+            if (err) {
+                return reject(err);
+            }
+        })
         server = app.listen(port, () => {
             resolve();
         }).on('error', reject);

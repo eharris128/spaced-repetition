@@ -3,6 +3,7 @@ import * as Cookies from 'js-cookie';
 import Header from './header';
 import QuestionPage from './question-page';
 import LoginPage from './login-page';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 class App extends React.Component {
     constructor(props) {
@@ -39,6 +40,8 @@ class App extends React.Component {
         }
     }
 
+    // Modify render function ternary or make additional ternary and routing for results page
+        // Bring in Router See ace-pomodoro container.js
     render() {
         if (!this.state.currentUser) {
             return (
