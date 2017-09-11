@@ -1,6 +1,6 @@
 import React from 'react';
 import * as Cookies from 'js-cookie';
-
+import Header from './header';
 import QuestionPage from './question-page';
 import LoginPage from './login-page';
 
@@ -41,10 +41,21 @@ class App extends React.Component {
 
     render() {
         if (!this.state.currentUser) {
-            return <LoginPage />;
+            return (
+            <div className='landing-page-container'>
+                <Header />;
+                <LoginPage />;
+            </div>
+            )
         }
 
-        return <QuestionPage />;
+        return (
+        <div className='question-page-container'>
+            <Header />;
+            <QuestionPage />;
+        </div>
+        )
+
     }
 }
 

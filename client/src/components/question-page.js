@@ -33,9 +33,12 @@ export default class QuestionPage extends React.Component {
         );
 
         return (
-            <ul className="question-list">
-                {questions}
-            </ul>
+            <div className='question-container'>
+                <ul className="question-list">
+                    {questions}
+                </ul>
+                <button className='btn btn-logout'>Log Out</button>
+            </div>
         );
     }
 }
