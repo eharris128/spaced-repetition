@@ -37,7 +37,6 @@ export default class QuestionPage extends React.Component {
                 <ul className="question-list">
                     {questions}
                 </ul>
-                <button className='btn btn-logout'><a href={'/api/auth/logout'}>Log Out</a></button>
             </div>
         );
     }

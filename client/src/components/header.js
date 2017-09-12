@@ -36,10 +36,7 @@ class Header extends Component {
           >
           Data Structures & Algorithms
           </Link>
-          {/* <a href="#" className="brand-logo">Data Structures & Algorithms</a> */}
-          <ul id="nav-mobile" className="center">
-              <li className="right" ><a href={'/api/auth/github'}>Login with Github</a></li>
-          </ul>
+              <ul className="right">{this.renderContent()}</ul>
         </div>
       </nav>
     );
