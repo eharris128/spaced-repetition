@@ -96,7 +96,7 @@ app.get('/api/auth/github/callback',
     )
       .then (user => {
         res.cookie('accessToken', req.user.accessToken, {expires: 0});
-        res.redirect('/gotem');
+        res.redirect('/');
       });
   }
 );

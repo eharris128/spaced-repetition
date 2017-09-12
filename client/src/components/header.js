@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import 'materialize-css'; 
+import 'materialize-css/dist/css/materialize.min.css';
 
 class Header extends Component {
   // helper method for Login With Github, show this conditions
@@ -24,12 +26,20 @@ class Header extends Component {
   }
 
   render() {
-    console.log(this.props);
+    // console.log(this.props);
     return (
-      <nav>
-        <div className="nav-wrapper">
-<h2>Super Awesome Epic App EX 17</h2>
-    
+      <nav className="nav-wrapper blue">
+        <div>
+        <Link
+            to={this.props.auth ? "/api/auth/github" : "/"}
+            className="brand-logo"
+          >
+          Data Structures & Algorithms
+          </Link>
+          {/* <a href="#" className="brand-logo">Data Structures & Algorithms</a> */}
+          <ul id="nav-mobile" className="center">
+              <li className="right" ><a href={'/api/auth/github'}>Login with Github</a></li>
+          </ul>
         </div>
       </nav>
     );
