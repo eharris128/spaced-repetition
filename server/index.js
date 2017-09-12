@@ -7,6 +7,7 @@ const keys = require('./config/keys');
 const mongoose = require('mongoose');
 const { Users } = require('./models/users');
 
+
 mongoose.connect(keys.MONGO_URI);
 let secret = {
   CLIENT_ID: process.env.CLIENT_ID,
@@ -17,6 +18,10 @@ if(process.env.NODE_ENV !== 'production') {
   secret = require('./config/keys');
 }
 const app = express();
+
+// Allows CORS 
+app.use(function(req, res, next) { res.header('Access-Control-Allow-Origin', '*'); res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept'); next(); });
+
 app.use(passport.initialize());
 passport.use(
   new GitHubStrategy({
@@ -76,6 +81,7 @@ passport.use(
 );
 app.get('/api/auth/github',
   passport.authenticate('github', {scope: ['profile']}));
+
 app.get('/api/auth/github/callback',
   passport.authenticate('github', {
     failureRedirect: '/',
@@ -83,7 +89,7 @@ app.get('/api/auth/github/callback',
   }),
   (req, res) => {
     console.log('============================================');
-    // console.log('Users: ', Users);
+    console.log('Endpoint: ', Users);
     Users.findOneAndUpdate(
       { id: req.user.gitHubId},
       {

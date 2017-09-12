@@ -1,28 +1,37 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import 'materialize-css'; 
 import 'materialize-css/dist/css/materialize.min.css';
-
+import { logoutUser, loginUser } from '../actions/index';
 class Header extends Component {
-  // helper method for Login With Github, show this conditions
+
+  loginUser_user(e) {
+    e.preventDefault();    
+
+    this.props.dispatch(loginUser());
+    // this.props.history.push("/api/auth/github");
+    // this.linkElement.click();
+    window.location="/api/auth/github"
+  } 
+
+  logoutUser_sid(e) {
+    e.preventDefault();
+    this.props.dispatch(logoutUser());
+    window.location="/api/auth/logout"
+  } 
+  // helper method for Login With Github, show this conditions, onClick={e => this.loginUser_user(e)}
   renderContent() {
-    switch (this.props.auth) {
-      case null:
-        return;
-      case false:
-        return (
-          <li>
-            <a href="/api/auth/github">Login With GitHub</a>
-          </li>
-        );
-      default:
-        return (
-          <li>
-            <a href="/api/auth/logout">Logout</a>
-          </li>
-        );
-    }
+    console.log('-------login status-->', this.props.auth);
+    return !this.props.auth ? (
+    <li>
+      <a role="button" onClick={e => this.loginUser_user(e)}>Login With GitHub</a>
+    </li>
+    ):(
+    <li>
+       <a role="button" onClick={e => this.logoutUser_sid(e)}>Logout</a>
+    </li>
+    );
   }
 
   render() {
@@ -37,6 +46,7 @@ class Header extends Component {
           Data Structures & Algorithms
           </Link>
               <ul className="right">{this.renderContent()}</ul>
+    
         </div>
       </nav>
     );
@@ -45,8 +55,4 @@ class Header extends Component {
 
 const mapStateToProps = state => ({ auth: state.auth })
 
-// function mapStateToProps(state) {
-//   return { auth: state.auth };
-// }
-
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps)(withRouter(Header));

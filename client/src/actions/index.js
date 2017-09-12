@@ -1,5 +1,5 @@
 import axios from "axios";
-import { FETCH_USER } from "./types";
+import { FETCH_USER, LOGOUT_USER, LOGIN_USER } from "./types";
 
 // action creator with axios
 export const fetchUser = () => {
@@ -9,6 +9,34 @@ export const fetchUser = () => {
       .then(res => dispatch({ type: FETCH_USER, payload: res.data }));
   };
 };
-// package.json has now proxy target for /api
 
+
+// package.json has now proxy target for /api
 // react component calls an action, action creator returns an action which is sent to the dispatch function which sends the action to all the different reducers in the store, causing them to instantly recalculate/rerender the app state.
+
+// export const loginUser = () => {
+//   return function(dispatch) {
+//     axios
+//       .get("/api/auth/github")
+//       .then(res => dispatch({ type: LOGIN_USER, payload: res.data }));
+//   };
+// };
+
+
+export const loginUser = () => {
+  console.log('logged in');
+  return {type: LOGIN_USER} 
+} 
+export const logoutUser = () => {
+  console.log('logged out');
+  return {type: LOGOUT_USER} 
+} 
+// export const logoutUser = () => { type: LOGOUT_USER };
+
+// export const logoutUser = () => {
+//   return function(dispatch) {
+//     axios
+//       .get("/api/auth/logout")
+//       .then(res => dispatch({ type: LOGOUT_USER, payload: res.data }));
+//   };
+// };
