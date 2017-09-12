@@ -2,7 +2,7 @@ import { LOGOUT_USER, LOGIN_USER } from "./actions/types";
 // import { FETCH_USER, LOGOUT_USER, LOGIN_USER } from "./actions/types";
 
 const initialState = { 
-  auth: true, 
+  auth: false, 
   questionOneScore: 0, 
   questionTwoScore: 0, 
   questionThreeScore: 0, 

@@ -1,3 +1,4 @@
+const bodyParser = require('body-parser');
 const path = require('path');
 const express = require('express');
 const passport = require('passport');
@@ -6,6 +7,7 @@ const BearerStrategy = require('passport-http-bearer').Strategy;
 const keys = require('./config/keys');
 const mongoose = require('mongoose');
 const { Users } = require('./models/users');
+const { Questions } = require('./models/questions');
 
 
 mongoose.connect(keys.MONGO_URI);
@@ -19,6 +21,13 @@ if(process.env.NODE_ENV !== 'production') {
 }
 const app = express();
 
+// Look at what this does: 
+// app.use(
+//   bodyParser.urlencoded({
+//     extended: true
+//   })
+// );
+app.use(bodyParser.json());
 // Allows CORS 
 app.use(function(req, res, next) { res.header('Access-Control-Allow-Origin', '*'); res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept'); next(); });
 
@@ -79,6 +88,64 @@ passport.use(
     }
   )
 );
+
+// app.get('/api/post', (req, res) => {
+//   Questions.find()
+//     .exec()
+//     .then(questions => {
+//       res.json({
+//         questions: questions.map(question => question)
+//       });
+//     })
+//     .catch(err => {
+//       console.error(err);
+//       res.status(500).json({ message: 'Internal server error' });
+//     });
+// });
+
+// Added body-parser to be able to parse req.body
+// req.body is now found, however it req.body.question === undefined
+// app.post('/api/post', (req, res) => {
+//   // console.log('hope: ', req.body);
+//   // This function should be able to parse req.body but ??
+//   Questions.create({
+//     question: 'What does LIFO stand for?',
+//     answer: 'Last In First Out'
+//   })
+//     .then(()=> {
+//       console.log('Lifes problems: ', req.body);
+//       res.status(201).json(req.body);
+//     })
+//     .catch(err => {
+//       console.error(err);
+//       res.status(500).json({ message: 'Internal server error' });
+//     });
+// });
+
+// app.post('/api/post', (req, res) => {
+//   // This function should be able to parse req.body but ??
+//   Questions.create({
+//     question: 'What does FIFO stand for?',
+//     answer: 'First In First Out'
+//   })
+//     .then(()=> {
+//       console.log('Lifes problems: ', req.body);
+//       res.status(201).json(req.body);
+//     })
+//     .catch(err => {
+//       console.error(err);
+//       res.status(500).json({ message: 'Internal server error' });
+//     });
+// });
+app.delete('/api/post/:id', (req, res) => {
+  Questions.findByIdAndRemove(req.params.id)
+    .exec()
+    .then(question => res.status(204).end())
+    .catch(err => res.status(500).json({ message: 'Internal server error' }));
+});
+
+
+// Authentication Flow
 app.get('/api/auth/github',
   passport.authenticate('github', {scope: ['profile']}));
 
@@ -88,8 +155,7 @@ app.get('/api/auth/github/callback',
     session: false
   }),
   (req, res) => {
-    console.log('============================================');
-    console.log('Endpoint: ', Users);
+    // console.log('Endpoint: ', Users);
     Users.findOneAndUpdate(
       { id: req.user.gitHubId},
       {
@@ -116,7 +182,6 @@ app.get('/api/me',
   (req, res) => {
     Users.findOne({token: req.user.token})
       .then(user => {
-        console.log('User endpoint: ', user);
         res.status(200).send(user);
       })
       .catch(err => {
@@ -125,10 +190,24 @@ app.get('/api/me',
       });
   }
 );
-app.get('/api/questions',
+app.get('/api/post',
   passport.authenticate('bearer', {session: false}),
+
   // res.redirect('/question-page')
-  (req, res) => res.json(['Question 1', 'Question 2'])
+  (req, res) => {
+    Questions.find() 
+      .limit(1)
+      .exec()
+      .then(question => {
+        console.log('Whats up bro: ', question[0]);
+        // bring over question answer
+        res.json(question[0].question);
+      });
+    // .then(() => {
+    //   res.json(['Question 1', 'Question 2']);
+    // });
+
+  }
 );
 // Serve the built client
 app.use(express.static(path.resolve(__dirname, '../client/build')));
