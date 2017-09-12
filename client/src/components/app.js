@@ -13,7 +13,7 @@ class App extends React.Component {
         };
     }
 
-    componentDidMount() {
+    componentWillMount() {
         // Job 4: Redux-ify all of the state and fetch calls to async actions.
         const accessToken = Cookies.get('accessToken');
         if (accessToken) {
@@ -47,7 +47,7 @@ class App extends React.Component {
             <div className="container">
               <Router>
                 <div>
-                  <Route exact path="/" component={Header} />
+                  <Route exact path="/" render={(props) => <Header currentUser={this.state.currentUser} {...props}/>} />
                   <Route exact path="/api/auth/github" component={LoginPage} />
                   <Route path="/" component={QuestionPage} />
                 </div>

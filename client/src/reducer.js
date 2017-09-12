@@ -18,10 +18,6 @@ const initialState = {
 export default function(state, action) {
   state = state || initialState;
   switch (action.type) {
-    case LOGIN_USER:
-    return { ...state, auth: true }; 
-    case LOGOUT_USER:
-    return { ...state, auth: false };
     default:
       return state;
   }

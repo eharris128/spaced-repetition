@@ -1,14 +1,14 @@
 import axios from "axios";
-import { FETCH_USER, LOGOUT_USER, LOGIN_USER } from "./types";
+// import { FETCH_USER, LOGOUT_USER, LOGIN_USER } from "./types";
 
 // action creator with axios
-export const fetchUser = () => {
-  return function(dispatch) {
-    axios
-      .get("/api/me")
-      .then(res => dispatch({ type: FETCH_USER, payload: res.data }));
-  };
-};
+// export const fetchUser = () => {
+//   return function(dispatch) {
+//     axios
+//       .get("/api/me")
+//       .then(res => dispatch({ type: FETCH_USER, payload: res.data }));
+//   };
+// };
 
 
 // package.json has now proxy target for /api
@@ -23,14 +23,14 @@ export const fetchUser = () => {
 // };
 
 
-export const loginUser = () => {
-  console.log('logged in');
-  return {type: LOGIN_USER} 
-} 
-export const logoutUser = () => {
-  console.log('logged out');
-  return {type: LOGOUT_USER} 
-} 
+// export const loginUser = () => {
+//   console.log('logged in');
+//   return {type: LOGIN_USER} 
+// } 
+// export const logoutUser = () => {
+//   console.log('logged out');
+//   return {type: LOGOUT_USER} 
+// } 
 // export const logoutUser = () => { type: LOGOUT_USER };
 
 // export const logoutUser = () => {
