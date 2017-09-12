@@ -16,8 +16,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-server/secret.js
-server/config
+
+server/config/secret.js
 
 # package-lock.json
 package-lock.json

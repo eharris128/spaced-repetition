@@ -121,7 +121,7 @@ app.get('/api/me',
 );
 app.get('/api/questions',
   passport.authenticate('bearer', {session: false}),
-  // res.redirect('/question-page'),
+  // res.redirect('/question-page')
   (req, res) => res.json(['Question 1', 'Question 2'])
 );
 // Serve the built client
