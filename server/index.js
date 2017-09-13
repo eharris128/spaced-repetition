@@ -130,8 +130,8 @@ passport.use(
 // app.post('/api/post', (req, res) => {
 //   // This function should be able to parse req.body but ??
 //   Questions.create({
-//     question: 'What does FIFO stand for?',
-//     answer: 'First In First Out'
+//     question: req.body.question,
+//     answer: req.body.answer
 //   })
 //     .then(()=> {
 //       console.log('Lifes problems: ', req.body);
@@ -207,7 +207,7 @@ app.get(
     Questions.find()
       .exec()
       .then(questions => {
-        console.log('Questions coming from DB: ', questions);
+        // console.log('Questions coming from DB: ', questions);
         const questionArray = questions.map(question => ({
           question: question.question,
           answer: question.answer

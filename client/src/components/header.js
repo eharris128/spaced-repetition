@@ -8,15 +8,11 @@ class Header extends Component {
   renderContent() {
     return !this.props.currentUser ? (
       <li>
-        <a href="/api/auth/github">
-          Login With GitHub
-        </a>
+        <a href="/api/auth/github">Login With GitHub</a>
       </li>
     ) : (
       <li>
-        <a href="/api/auth/logout">
-          Logout
-        </a>
+        <a href="/api/auth/logout">Logout</a>
       </li>
     );
   }
@@ -25,12 +21,7 @@ class Header extends Component {
     return (
       <nav className="nav-wrapper blue">
         <div>
-          <Link
-            to={this.props.currentUser ? "/api/auth/github" : "/"}
-            className="brand-logo"
-          >
-            Data Structures & Algorithms
-          </Link>
+          <h2 className="brand-logo"> DSA</h2>
           <ul className="right">{this.renderContent()}</ul>
         </div>
       </nav>
