@@ -1,22 +1,39 @@
 import React from "react";
 import * as Cookies from "js-cookie";
+import Result from './result-page';
+import { connect } from "react-redux";
 const { LinkedList } = require("../LinkedList");
-
-export default class QuestionPage extends React.Component {
+const initialState = {      
+  questions: [],
+  questionList: null,
+  currentAnswer: null,
+  feedback: null,
+  currentQuestion: null,
+  resultPage: null
+}
+export class QuestionPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      questions: [],
-      questionList: null,
-      currentAnswer: null,
-      feedback: null,
-      currentQuestion: null,
-      endScreen: false
-    };
+    this.state = initialState;
+  }
+
+  componentWillMount() {
+    if(this.props.restartApp) {
+      console.log('--------HIT----------');
+      this.setState({
+        questions: [],
+        questionList: null,
+        currentAnswer: null,
+        feedback: null,
+        currentQuestion: null,
+        resultPage: null
+      });
+    }
   }
 
   componentDidMount() {
     const accessToken = Cookies.get("accessToken");
+    // console.log('------------->', this.props)
     if (accessToken) {
       fetch("/api/post", {
         headers: {
@@ -74,8 +91,8 @@ export default class QuestionPage extends React.Component {
       console.log('Now we exit');
       // Handle linking to endScreen based off of state. 
       this.setState({
-        endScreen: true
-      })
+        resultPage: true
+      });
     }
 
     let userInput = this.userInput.value.toLowerCase();
@@ -96,6 +113,7 @@ export default class QuestionPage extends React.Component {
     let feedback, question, inputForm, infoModal;
 
     const accessToken = Cookies.get("accessToken");
+
     if (this.state.currentQuestion && !this.state.feedback) {
       question = <div className="question">{this.state.currentQuestion}</div>;
     }
@@ -142,15 +160,30 @@ export default class QuestionPage extends React.Component {
         </div>
       );
     }
-    return (
-      <div className="question-container">
-        <div className="user-input-container">
-          {infoModal}
-          {question}
-          {inputForm}
-          {feedback}
+
+    if (!this.state.resultPage) { 
+       return (
+        <div className="question-container">
+          <div className="user-input-container">
+            {infoModal}
+            {question}
+            {inputForm}
+            {feedback}
+          </div>
         </div>
-      </div>
-    );
+      ) 
+    } else if (this.state.resultPage === true) {
+      console.log('-------- are we here?')
+        return (
+            <div className="question-container">
+              <div className="user-input-container">
+                {<Result />}
+              </div>
+            </div>
+        )
+      }
+    }
   }
-}
+
+  const mapStateToProps = state => ({restartApp: state.restartApplication});
+  export default connect(mapStateToProps)(QuestionPage)

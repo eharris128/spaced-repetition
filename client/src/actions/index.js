@@ -1,5 +1,21 @@
 import axios from "axios";
-// import { FETCH_USER, LOGOUT_USER, LOGIN_USER } from "./types";
+import { RESTART_APP } from "./types";
+
+export const restartApp = () => {
+  // console.log('me restart');
+  return {type: RESTART_APP} 
+} 
+
+
+
+
+
+
+
+
+
+
+
 
 // action creator with axios
 // export const fetchUser = () => {

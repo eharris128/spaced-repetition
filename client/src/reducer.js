@@ -1,5 +1,5 @@
 // import { LOGOUT_USER, LOGIN_USER } from "./actions/types";
-// import { FETCH_USER, LOGOUT_USER, LOGIN_USER } from "./actions/types";
+import { RESTART_APP } from "./actions/types";
 
 const initialState = { 
   auth: false, 
@@ -7,17 +7,14 @@ const initialState = {
   questionTwoScore: 0, 
   questionThreeScore: 0, 
   questionFourScore: 0, 
-  questionFiveScore: 0, 
-  questionSixScore: 0,
-  questionSevenScore: 0,
-  questionEightScore: 0,
-  questionNineScore: 0,
-  questionTenScore: 0
+  restartApplication: null
 }
 
 export default function(state, action) {
   state = state || initialState;
   switch (action.type) {
+    case RESTART_APP:
+      return {...state, restartApplication: true}
     default:
       return state;
   }
