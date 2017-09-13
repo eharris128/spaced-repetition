@@ -9,6 +9,7 @@ class Result extends React.Component {
   goToStart(e) {
     e.preventDefault();
     this.props.dispatch(restartApp());
+    console.log('Clicked restart');
   }
 
 
