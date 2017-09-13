@@ -5,23 +5,16 @@ export default class QuestionPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      questions: []
+      questions: [],
+      currentAnswer: null,
+      feedback: null,
+      currentQuestion: null
     };
   }
 
-    // Follow this format of storing all questions from DB in local state to make it easier to validate user answer.
-
-    // questions: [
-    //   {
-    //     question: "What does FIFO stand for?",
-    //     answer: "First In First Out"
-    //   },
-    //   {
-    //     question: "What does LIFO stand for?",
-    //     answer: "Last In First Out"
-    //   }
   componentDidMount() {
     const accessToken = Cookies.get("accessToken");
+    if (accessToken) {
     fetch("/api/post", {
       headers: {
         Authorization: `Bearer ${accessToken}`
@@ -35,34 +28,90 @@ export default class QuestionPage extends React.Component {
       })
       .then(questions =>
         this.setState({
-          questions
+          questions,
+          currentQuestion: questions[0].question,
+          currentAnswer: questions[0].answer
         })
       );
+    }
+
   }
+
   submitUserAnswer(e) {
     e.preventDefault();
-    // look at state.questions[0] / question to inspect answer for question
-
+    let userInput = this.userInput.value.toLowerCase();
+    let correctAnswer = this.state.currentAnswer.toLowerCase();
+    this.userInput.value = "";
+    if (userInput === correctAnswer) {
+      this.setState({
+        feedback: "correct"
+      });
+    } else {
+      this.setState({
+        feedback: "incorrect"
+      });
+    }
   }
-  render() {
-    const questions = <li> {this.state.questions}</li>;
-    // const questions = this.state.questions.map((question, index) =>
-    //     <li key={index}>{question}</li>
-    // );
 
+  goToNext(e) {
+    e.preventDefault();
+    console.log('Clicked to next question.')
+  }
+  
+  render() {
+    let feedback, question, inputForm, infoModal;
+
+    const accessToken = Cookies.get("accessToken");
+    if (this.state.currentQuestion) {
+      console.log("Answer: ", this.state.currentQuestion);
+      question = <div className="question">{this.state.currentQuestion}</div>;
+    }
+    if (this.state.feedback === "correct") {
+      feedback = (
+        <div className="right-answer">
+          <p>Correct Answer. Great Job!</p>
+          <button onClick={e => this.goToNext(e)}>Go to next question.</button>
+        </div>
+      );
+    }
+    if (this.state.feedback === "incorrect") {
+      feedback = (
+        <div className="wrong-answer">
+          <p>Incorrect. Keep studying.</p>
+          <button onClick={e => this.goToNext(e)}>Go to next question.</button>
+        </div>
+      );
+    }
+    // Looks at both if user is logged in, and if state's current question has been defined 
+    // in order to render form and current question to the UI at the same time.
+    if (accessToken && this.state.currentQuestion) {
+      inputForm = (
+        <form onSubmit={e => this.submitUserAnswer(e)}>
+          <input
+            aria-label="your answer"
+            id="userInput"
+            type="text"
+            placeholder="My Answer"
+            ref={input => (this.userInput = input)}
+          />
+          <button type="submit">Submit</button>
+        </form>
+      );
+    }
+    if (!accessToken) {
+      infoModal = (
+        <div className='landing'>
+          <p> Welcome to DSA Study using Spaced Repetition. Please login to begin studying.</p>
+        </div>
+      )
+    }
     return (
       <div className="question-container">
-        <ul className="question-list">{questions}</ul>
         <div className="user-input-container">
-          <form onSubmit={e => this.submitUserAnswer(e)}>
-            <input
-              aria-label="your answer"
-              id="userInput"
-              type="text"
-              placeholder="My Answer"
-            />
-            <button type="submit">Submit</button>
-          </form>
+          {infoModal}
+          {question}
+          {inputForm}
+          {feedback}
         </div>
       </div>
     );

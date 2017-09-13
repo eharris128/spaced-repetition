@@ -1,4 +1,4 @@
-import { LOGOUT_USER, LOGIN_USER } from "./actions/types";
+// import { LOGOUT_USER, LOGIN_USER } from "./actions/types";
 // import { FETCH_USER, LOGOUT_USER, LOGIN_USER } from "./actions/types";
 
 const initialState = { 
