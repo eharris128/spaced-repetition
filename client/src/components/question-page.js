@@ -1,7 +1,6 @@
 import React from "react";
 import * as Cookies from "js-cookie";
-// import Result from "./result-page";
-import Header from './header';
+import Result from "./result-page";
 import { connect } from "react-redux";
 const { LinkedList } = require("../LinkedList");
 const initialState = {
@@ -18,23 +17,21 @@ export class QuestionPage extends React.Component {
     this.state = initialState;
   }
 
-  // componentWillReceiveProps() {
-  //   if (this.props.restartApp) {
-  //     console.log("--------HIT----------");
-  //     this.setState({
-  //       questions: [],
-  //       questionList: null,
-  //       currentAnswer: null,
-  //       feedback: null,
-  //       currentQuestion: null,
-  //       resultPage: null
-  //     });
-  //   }
-  // }
+    componentWillReceiveProps(nextProps) {
+    if(nextProps.restartApp && !this.props.restartApp) {
+      this.setState({
+        questions: [],
+        questionList: null,
+        currentAnswer: null,
+        feedback: null,
+        currentQuestion: null,
+        resultPage: null
+      });
+    }
+  }
 
   componentDidMount() {
     const accessToken = Cookies.get("accessToken");
-    // console.log('------------->', this.props)
     if (accessToken) {
       fetch("/api/post", {
         headers: {
@@ -68,7 +65,6 @@ export class QuestionPage extends React.Component {
     if (this.state.feedback === "correct") {
       currentQuestionList.remove(0);
     } else if (this.state.feedback === "incorrect") {
-      // This insertion adds the current question to somewhere in the list
       currentQuestionList.insert(
         currentQuestionList.length - 2,
         currentQuestionList.head.question,
@@ -86,16 +82,12 @@ export class QuestionPage extends React.Component {
 
   submitUserAnswer(e) {
     e.preventDefault();
-    // if state = initial state + resultPage: true => query database..
-    // this does not work because we would have to perform this check inside of this function
-    // or inside of the render which results in a loop of setStates which does not work
-    if (this.state.questionList.length === 1) {
-      console.log("State before reset: ", this.state);
-      this.state = initialState;
+    if (this.state.questionList.head.next === null) {
+      console.log('Now we exit');
+      // Handle linking to endScreen based off of state. 
       this.setState({
         resultPage: true
       });
-      return;
     }
 
     let userInput = this.userInput.value.toLowerCase();
@@ -112,37 +104,6 @@ export class QuestionPage extends React.Component {
     }
   }
 
-  goToStart(e) {
-    // console.log("You have clicked on the submit results page");
-    const accessToken = Cookies.get("accessToken");
-    if (accessToken) {
-      fetch("/api/post", {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
-      })
-        .then(res => {
-          if (!res.ok) {
-            throw new Error(res.statusText);
-          }
-          return res.json();
-        })
-        .then(questions => {
-          let questionList = new LinkedList();
-          for (let i = 0; i < questions.length; i++) {
-            console.log("index: ", i);
-            questionList.insert(i, questions[i].question, questions[i].answer);
-          }
-          // console.log("Are we getting the questions: ", questionList);
-          this.state.questionList = questionList;
-          this.state.currentQuestion = questionList.head.question;
-          this.state.currentAnswer = questionList.head.answer;
-          this.state.resultPage = false;
-          console.log("--this state--------> ", this.state);
-        });
-    }
-  }
-  
   render() {
     let feedback, question, inputForm, infoModal;
 
@@ -168,8 +129,6 @@ export class QuestionPage extends React.Component {
         </div>
       );
     }
-    // Looks at both if user is logged in, and if state's current question has been defined
-    // in order to render form and current question to the UI at the same time.
     if (accessToken && this.state.currentQuestion && !this.state.feedback) {
       inputForm = (
         <form onSubmit={e => this.submitUserAnswer(e)}>
@@ -208,16 +167,16 @@ export class QuestionPage extends React.Component {
       );
     } else if (this.state.resultPage === true) {
       return (
-        <div className="results card">
-          <p>You are done.</p>
-          <button className="btn button blue" onClick={e => this.goToStart(e)}>
-            Start Over
-          </button>
+        <div className="question-container">
+          <div className="user-input-container">{<Result />}</div>
         </div>
       );
     }
   }
 }
 
-const mapStateToProps = state => ({ restartApp: state.restartApplication, currentUser: state.currentUser });
+const mapStateToProps = state => ({
+  restartApp: state.restartApplication,
+  currentUser: state.currentUser
+});
 export default connect(mapStateToProps)(QuestionPage);
