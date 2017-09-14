@@ -1,12 +1,13 @@
 // import axios from "axios";
-import { RESTART_APP } from "./types";
+import { RESTART_APP, RESET_STATE} from "./types";
 
 export const restartApp = () => {
-  // console.log('me restart');
   return {type: RESTART_APP} 
 } 
 
-
+export const resetState = () => {
+  return {type: RESET_STATE} 
+} 
 
 
 

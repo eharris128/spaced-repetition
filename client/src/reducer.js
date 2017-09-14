@@ -1,5 +1,5 @@
 // import { LOGOUT_USER, LOGIN_USER } from "./actions/types";
-import { RESTART_APP } from "./actions/types";
+import { RESTART_APP, RESET_STATE } from "./actions/types";
 
 const initialState = { 
   auth: false, 
@@ -15,6 +15,8 @@ export default function(state, action) {
   switch (action.type) {
     case RESTART_APP:
       return {...state, restartApplication: true}
+    case RESET_STATE:
+      return {...state, restartApplication: null}
     default:
       return state;
   }

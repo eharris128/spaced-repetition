@@ -2,6 +2,7 @@ import React from "react";
 import * as Cookies from "js-cookie";
 import Result from "./result-page";
 import { connect } from "react-redux";
+import {resetState} from '../actions/index';
 const { LinkedList } = require("../LinkedList");
 const initialState = {
   questions: [],
@@ -17,16 +18,44 @@ export class QuestionPage extends React.Component {
     this.state = initialState;
   }
 
-    componentWillReceiveProps(nextProps) {
-    if(nextProps.restartApp && !this.props.restartApp) {
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.restartApp && !this.props.restartApp) {
       this.setState({
         questions: [],
-        questionList: null,
-        currentAnswer: null,
         feedback: null,
-        currentQuestion: null,
         resultPage: null
       });
+
+      const accessToken = Cookies.get("accessToken");
+      if (accessToken) {
+        fetch("/api/post", {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        })
+          .then(res => {
+            if (!res.ok) {
+              throw new Error(res.statusText);
+            }
+            return res.json();
+          })
+          .then(questions => {
+            let questionList = new LinkedList();
+            for (let i = 0; i < questions.length; i++) {
+              questionList.insert(
+                i,
+                questions[i].question,
+                questions[i].answer
+              );
+            }
+            this.setState({
+              questionList,
+              currentQuestion: questionList.head.question,
+              currentAnswer: questionList.head.answer
+            });
+          });
+          this.props.dispatch(resetState());
+        }
     }
   }
 
@@ -83,8 +112,8 @@ export class QuestionPage extends React.Component {
   submitUserAnswer(e) {
     e.preventDefault();
     if (this.state.questionList.head.next === null) {
-      console.log('Now we exit');
-      // Handle linking to endScreen based off of state. 
+      console.log("Now we exit");
+      // Handle linking to endScreen based off of state.
       this.setState({
         resultPage: true
       });
