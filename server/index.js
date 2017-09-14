@@ -18,7 +18,6 @@ let secret = {
 if (process.env.NODE_ENV !== 'production') {
   secret = require('./config/keys');
 }
-
 const app = express();
 
 // Look at what this does:
@@ -82,35 +81,24 @@ app.get('/api/post', (req, res) => {
     });
 });
 
-// What is the name of the concept that requries a base case and a general case?
-// Recursion
-
-// What is the condition that will end the recusive case in a program?
-// base case
-
-// Every problem that can be solved recursively can also be solved: 
-// iteratively
-
-
-
 // Added body-parser to be able to parse req.body
 // req.body is now found, however it req.body.question === undefined
-// app.post('/api/post', (req, res) => {
-//   // console.log('hope: ', req.body);
-//   // This function should be able to parse req.body but ??
-//   Questions.create({
-//     question: 'What does LIFO stand for?',
-//     answer: 'Last In First Out'
-//   })
-//     .then(()=> {
-//       console.log('Lifes problems: ', req.body);
-//       res.status(201).json(req.body);
-//     })
-//     .catch(err => {
-//       console.error(err);
-//       res.status(500).json({ message: 'Internal server error' });
-//     });
-// });
+app.post('/api/post', (req, res) => {
+  // console.log('hope: ', req.body);
+  // This function should be able to parse req.body but ??
+  Questions.create({
+    question: 'What is the name of the concept that requries a base case and a general case?',
+    answer: 'Recursion'
+  })
+    .then(()=> {
+      console.log('Lifes problems: ', req.body);
+      res.status(201).json(req.body);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ message: 'Internal server error' });
+    });
+});
 
 // app.post('/api/post', (req, res) => {
 //   // This function should be able to parse req.body but ??
