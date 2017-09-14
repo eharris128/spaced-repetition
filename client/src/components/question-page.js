@@ -1,6 +1,7 @@
 import React from "react";
 import * as Cookies from "js-cookie";
-import Result from "./result-page";
+// import Result from "./result-page";
+import Header from './header';
 import { connect } from "react-redux";
 const { LinkedList } = require("../LinkedList");
 const initialState = {
@@ -112,7 +113,7 @@ export class QuestionPage extends React.Component {
   }
 
   goToStart(e) {
-    console.log("You have clicked on the submit results page");
+    // console.log("You have clicked on the submit results page");
     const accessToken = Cookies.get("accessToken");
     if (accessToken) {
       fetch("/api/post", {
@@ -132,12 +133,12 @@ export class QuestionPage extends React.Component {
             console.log("index: ", i);
             questionList.insert(i, questions[i].question, questions[i].answer);
           }
-          console.log("Are we getting the questions: ", questionList);
+          // console.log("Are we getting the questions: ", questionList);
           this.state.questionList = questionList;
           this.state.currentQuestion = questionList.head.question;
           this.state.currentAnswer = questionList.head.answer;
           this.state.resultPage = false;
-          console.log("HI ", this.state);
+          console.log("--this state--------> ", this.state);
         });
     }
   }
@@ -218,5 +219,5 @@ export class QuestionPage extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({ restartApp: state.restartApplication });
+const mapStateToProps = state => ({ restartApp: state.restartApplication, currentUser: state.currentUser });
 export default connect(mapStateToProps)(QuestionPage);

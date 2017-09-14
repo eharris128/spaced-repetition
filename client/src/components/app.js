@@ -3,7 +3,7 @@ import * as Cookies from 'js-cookie';
 import Header from './header';
 import QuestionPage from './question-page';
 import LoginPage from './login-page';
-import Result from './result-page';
+// import Result from './result-page';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 class App extends React.Component {
@@ -44,14 +44,13 @@ class App extends React.Component {
     render() {
         return (
             <div className="container">
-              <Router>
-                <div>
-                  <Route exact path="/" render={(props) => <Header currentUser={this.state.currentUser} {...props}/>} />
-                  <Route exact path="/api/auth/github" component={LoginPage} />
-                  <Route path="/" component={QuestionPage} />
-                  {/* <Route path="/" component={Result} /> */}
-                </div>
-              </Router>
+                <Header currentUser={this.state.currentUser}/>
+                <Router>
+                    <div>
+                        <Route exact path="/api/auth/github" render={(props) => <LoginPage currentUser={this.state.currentUser} {...props}/>} />
+                        <Route exact path="/" render={(props) => <QuestionPage currentUser={this.state.currentUser} {...props}/>} />
+                    </div>
+                </Router>
             </div>
           );
     }

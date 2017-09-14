@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { restartApp } from '../actions/index';
-const { LinkedList } = require("../LinkedList");
+// const { LinkedList } = require("../LinkedList");
 
 
 class Result extends React.Component {

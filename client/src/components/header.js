@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import "materialize-css";
 import "materialize-css/dist/css/materialize.min.css";
 
@@ -8,7 +8,7 @@ class Header extends Component {
   renderContent() {
     // This is rendering twice: something is being passed in and it is mutating
       // what is being changed?
-    console.log("I have rendered!!")
+    // console.log(this.props.currentUser)
     return !this.props.currentUser ? (
       <li>
         <a href="/api/auth/github">Login With GitHub</a>
