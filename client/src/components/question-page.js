@@ -139,7 +139,7 @@ export class QuestionPage extends React.Component {
       feedback = (
         <div className="right-answer">
           <p>Correct Answer. Great Job!</p>
-          <button autoFocus onClick={e => this.goToNext(e)}>Go to next question.</button>
+          <button className="btn button pink" autoFocus onClick={e => this.goToNext(e)}>Go to next question.</button>
         </div>
       );
     }
