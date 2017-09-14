@@ -75,6 +75,7 @@ export class QuestionPage extends React.Component {
         })
         .then(questions => {
           console.log('What are the questions: ', questions)
+          console.log('The array we want: ', questions.questions);
           let questionList = new LinkedList();
           for (let i = 0; i < questions.length; i++) {
             console.log('Iterate');

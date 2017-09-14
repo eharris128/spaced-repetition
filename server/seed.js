@@ -8,8 +8,8 @@ const { Questions } = require('./models/questions');
 // answer:
 
 const data = [{
-  question: 'What is the name of the concept that requries a base case and a general case?',
-  answer: 'Recursion'
+  question: 'What is the condition that will end the recusive case in a program?',
+  answer: 'Base Case'
 }];
 
 mongoose.connect(process.env.MONGO_URI);
