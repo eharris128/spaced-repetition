@@ -20,7 +20,7 @@ class Header extends Component {
     return (
       <nav className="nav-wrapper blue">
         <div>
-          <h2 className="brand-logo">Study Hard App</h2>
+          <h2 className="brand-logo">Study Hard</h2>
           <ul className="right">{this.renderContent()}</ul>
         </div>
       </nav>

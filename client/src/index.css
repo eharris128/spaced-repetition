@@ -2,5 +2,23 @@ body {
   margin: 0;
   padding: 20px;
   font-family: 'Source Sans Pro', sans-serif;
+  font-size: 40px;
+}
+#form-font-size {
+  font-size: 40px;
+}
+.question {
+  font-size: 25px;
+  color:#272629;
+}
+h3 {
+  font-family: 'Princess Sofia', cursive;
+  color: rgba(238, 128, 150, 0.9);
+}
 
+input[type=text]:not(.browser-default):focus:not([readonly]),
+textarea.materialize-textarea:focus:not([readonly]) {
+  border-bottom: 1px solid #2175E4;
+  -webkit-box-shadow: 0 1px 0 0 #2786DF;
+          box-shadow: 0 1px 0 0 #2786DF;
 }
