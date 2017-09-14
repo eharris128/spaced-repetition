@@ -40,14 +40,10 @@ export class QuestionPage extends React.Component {
             return res.json();
           })
           .then(questions => {
-            let questionList = new LinkedList();
-            for (let i = 0; i < questions.length; i++) {
-              questionList.insert(
-                i,
-                questions[i].question,
-                questions[i].answer
-              );
-            }
+          let questionList = new LinkedList();
+          for (let i = 0; i < questions.questions.length; i++) {
+            questionList.insert(i, questions.questions[i].question, questions.questions[i].answer);
+          }
             this.setState({
               questionList,
               currentQuestion: questionList.head.question,
@@ -74,14 +70,10 @@ export class QuestionPage extends React.Component {
           return res.json();
         })
         .then(questions => {
-          console.log('What are the questions: ', questions)
-          console.log('The array we want: ', questions.questions);
           let questionList = new LinkedList();
-          for (let i = 0; i < questions.length; i++) {
-            console.log('Iterate');
-            questionList.insert(i, questions[i].question, questions[i].answer);
+          for (let i = 0; i < questions.questions.length; i++) {
+            questionList.insert(i, questions.questions[i].question, questions.questions[i].answer);
           }
-          console.log('Question list: ', questionList);
           this.setState({
             questionList,
             currentQuestion: questionList.head.question,
