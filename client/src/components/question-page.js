@@ -112,8 +112,6 @@ export class QuestionPage extends React.Component {
   submitUserAnswer(e) {
     e.preventDefault();
     if (this.state.questionList.head.next === null) {
-      console.log("Now we exit");
-      // Handle linking to endScreen based off of state.
       this.setState({
         resultPage: true
       });
@@ -145,7 +143,7 @@ export class QuestionPage extends React.Component {
       feedback = (
         <div className="right-answer">
           <p>Correct Answer. Great Job!</p>
-          <button onClick={e => this.goToNext(e)}>Go to next question.</button>
+          <button autoFocus onClick={e => this.goToNext(e)}>Go to next question.</button>
         </div>
       );
     }
@@ -154,14 +152,14 @@ export class QuestionPage extends React.Component {
         <div className="wrong-answer">
           <p>Incorrect. Keep studying.</p>
           <p>The correct answer is: '{this.state.currentAnswer}'</p>
-          <button onClick={e => this.goToNext(e)}>Go to next question.</button>
+          <button autoFocus onClick={e => this.goToNext(e)}>Go to next question.</button>
         </div>
       );
     }
     if (accessToken && this.state.currentQuestion && !this.state.feedback) {
       inputForm = (
         <form onSubmit={e => this.submitUserAnswer(e)}>
-          <input
+          <input autoFocus
             aria-label="your answer"
             id="userInput"
             type="text"
