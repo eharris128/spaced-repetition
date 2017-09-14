@@ -18,6 +18,7 @@ let secret = {
 if (process.env.NODE_ENV !== 'production') {
   secret = require('./config/keys');
 }
+
 const app = express();
 
 // Look at what this does:
@@ -46,31 +47,7 @@ passport.use(
       callbackURL: '/api/auth/github/callback'
     },
     (accessToken, refreshToken, profile, cb) => {
-      // Job 1: Set up Mongo/Mongoose, create a User model which store the
-      // github id, and the access token
-      // Job 2: Update this callback to either update or create the user
-      // so it contains the correct access token
-      // const user = database[accessToken] = {
-      // gitHubId: profile.id,
-      // accessToken: accessToken
-      // };
-      // Look to see if user is already in database - could use accessToken
-      // User.findOne({accessToken: accessToken})
-      // .then( user => {
-      // // if the user is there, then return user
-      // if (user) {
-      // return cb(null, user);
-      // } else {
-      // // if the user is not there, then we will create a new user
-      // User.create({
-      // gitHubId: accessToken
-      // })
-      // }
-      // })
-      // .then(user => {
-      // return cb(null, user);
-      // })
-      const user = {
+        const user = {
         gitHubId: profile.id,
         accessToken: accessToken,
         token: accessToken
@@ -81,9 +58,6 @@ passport.use(
 );
 passport.use(
   new BearerStrategy((token, done) => {
-    // Job 3: Update this callback to try to find a user with a
-    // matching access token. If they exist, let em in, if not,
-    // don't.
     Users.findOne({ token: token }).then(user => {
       if (!user) {
         return done(null, false);
@@ -94,19 +68,30 @@ passport.use(
   })
 );
 
-// app.get('/api/post', (req, res) => {
-//   Questions.find()
-//     .exec()
-//     .then(questions => {
-//       res.json({
-//         questions: questions.map(question => question)
-//       });
-//     })
-//     .catch(err => {
-//       console.error(err);
-//       res.status(500).json({ message: 'Internal server error' });
-//     });
-// });
+app.get('/api/post', (req, res) => {
+  Questions.find()
+    .exec()
+    .then(questions => {
+      res.json({
+        questions: questions.map(question => question)
+      });
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ message: 'Internal server error' });
+    });
+});
+
+// What is the name of the concept that requries a base case and a general case?
+// Recursion
+
+// What is the condition that will end the recusive case in a program?
+// base case
+
+// Every problem that can be solved recursively can also be solved: 
+// iteratively
+
+
 
 // Added body-parser to be able to parse req.body
 // req.body is now found, however it req.body.question === undefined

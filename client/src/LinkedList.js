@@ -31,21 +31,6 @@ class LinkedList {
     return node;
   }
   
-  // Retrieval
-  getQuestion(nthPosition) {
-    if (nthPosition < 0 || nthPosition >= this.length) {
-      throw new Error('Index error');
-    }
-    return this._find(nthPosition).question;
-  }
-  
-  // Retrieval
-  getAnswer(nthPosition) {
-    if (nthPosition < 0 || nthPosition >= this.length) {
-      throw new Error('Index error');
-    }
-    return this._find(nthPosition).answer;
-  }
   // Removal
   remove(nthPosition) {
     if (nthPosition < 0 || nthPosition >= this.length) {
