@@ -139,7 +139,7 @@ export class QuestionPage extends React.Component {
       feedback = (
         <div className="right-answer">
           <p>Correct Answer. Great Job!</p>
-          <button className="btn button pink" autoFocus onClick={e => this.goToNext(e)}>Go to next question.</button>
+          <button className="btn button blue" autoFocus onClick={e => this.goToNext(e)}>Go to next question.</button>
         </div>
       );
     }
@@ -148,7 +148,7 @@ export class QuestionPage extends React.Component {
         <div className="wrong-answer">
           <p>Incorrect. Keep studying.</p>
           <p>The correct answer is: '{this.state.currentAnswer}'</p>
-          <button autoFocus onClick={e => this.goToNext(e)}>Go to next question.</button>
+          <button className="btn blue" autoFocus onClick={e => this.goToNext(e)}>Go to next question.</button>
         </div>
       );
     }
@@ -156,31 +156,33 @@ export class QuestionPage extends React.Component {
       inputForm = (
         <form onSubmit={e => this.submitUserAnswer(e)}>
           <input autoFocus
+          className="s2"
+          id="form-font-size"
             aria-label="your answer"
             id="userInput"
             type="text"
-            placeholder="My Answer"
+            placeholder="Enter your answer"
             ref={input => (this.userInput = input)}
           />
-          <button type="submit">Submit</button>
+          <button className="btn blue" type="submit">Submit</button>
         </form>
       );
     }
     if (!accessToken) {
       infoModal = (
         <div className="landing">
-          <p>
-            Welcome to DSA Study using Spaced Repetition. Please login to begin
+          <h3>
+            Welcome to <strong>Study Hard</strong>! This application is using Spaced Repetition to help you better understand Data Structures and Algorithms. Please login to begin
             studying.
-          </p>
+          </h3>
         </div>
       );
     }
 
     if (!this.state.resultPage) {
       return (
-        <div className="question-container">
-          <div className="user-input-container">
+        <div className="question-coontainer">
+          <div className="user-input-coontainer">
             {infoModal}
             {question}
             {inputForm}
@@ -190,8 +192,8 @@ export class QuestionPage extends React.Component {
       );
     } else if (this.state.resultPage === true) {
       return (
-        <div className="question-container">
-          <div className="user-input-container">{<Result />}</div>
+        <div className="question-coontainer">
+          <div className="user-input-coontainer">{<Result />}</div>
         </div>
       );
     }
