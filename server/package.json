@@ -1,13 +1,13 @@
 {
-  "name": "thinkful-full-stack-template-server",
+  "name": "spaced repetition",
   "version": "1.0.0",
-  "description": "Server portion of a full-stack starter template",
+  "description": "Server portion of application",
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
     "test": "mocha"
   },
-  "author": "Joe Turner <jturner@thinkful.com>",
+  "author": "Daniel Kato Evan Harris",
   "license": "MIT",
   "devDependencies": {
     "nodemon": "^1.11.0"

@@ -1,5 +1,5 @@
 {
-  "name": "thinkful-full-stack-template-v2",
+  "name": "spaced-repetition",
   "version": "0.1.0",
   "description": "A full-stack starter template",
   "main": "index.js",
@@ -21,7 +21,7 @@
     "server/node_modules",
     "client/node_modules"
   ],
-  "author": "Joe Turner <jturner@thinkful.com>",
+  "author": "Daniel Kato Evan Harris",
   "license": "MIT",
   "dependencies": {
     "cross-env": "^3.1.4",
