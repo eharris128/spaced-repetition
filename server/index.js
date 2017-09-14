@@ -20,12 +20,6 @@ if (process.env.NODE_ENV !== 'production') {
 }
 const app = express();
 
-// Look at what this does:
-// app.use(
-//   bodyParser.urlencoded({
-//     extended: true
-//   })
-// );
 app.use(bodyParser.json());
 // Allows CORS
 app.use(function(req, res, next) {
@@ -46,7 +40,7 @@ passport.use(
       callbackURL: '/api/auth/github/callback'
     },
     (accessToken, refreshToken, profile, cb) => {
-        const user = {
+      const user = {
         gitHubId: profile.id,
         accessToken: accessToken,
         token: accessToken
@@ -67,6 +61,7 @@ passport.use(
   })
 );
 
+// Retrieval and creation of Questions endpoints
 app.get('/api/post', (req, res) => {
   Questions.find()
     .exec()
@@ -81,17 +76,12 @@ app.get('/api/post', (req, res) => {
     });
 });
 
-// Added body-parser to be able to parse req.body
-// req.body is now found, however it req.body.question === undefined
 app.post('/api/post', (req, res) => {
-  // console.log('hope: ', req.body);
-  // This function should be able to parse req.body but ??
   Questions.create({
-    question: 'What is the name of the concept that requries a base case and a general case?',
-    answer: 'Recursion'
+    question: req.body.question,
+    answer: req.body.answer
   })
     .then(()=> {
-      console.log('Lifes problems: ', req.body);
       res.status(201).json(req.body);
     })
     .catch(err => {
@@ -100,21 +90,6 @@ app.post('/api/post', (req, res) => {
     });
 });
 
-// app.post('/api/post', (req, res) => {
-//   // This function should be able to parse req.body but ??
-//   Questions.create({
-//     question: req.body.question,
-//     answer: req.body.answer
-//   })
-//     .then(()=> {
-//       console.log('Lifes problems: ', req.body);
-//       res.status(201).json(req.body);
-//     })
-//     .catch(err => {
-//       console.error(err);
-//       res.status(500).json({ message: 'Internal server error' });
-//     });
-// });
 app.delete('/api/post/:id', (req, res) => {
   Questions.findByIdAndRemove(req.params.id)
     .exec()
@@ -135,7 +110,6 @@ app.get(
     session: false
   }),
   (req, res) => {
-    // console.log('Endpoint: ', Users);
     Users.findOneAndUpdate(
       { id: req.user.gitHubId },
       {
@@ -180,7 +154,6 @@ app.get(
     Questions.find()
       .exec()
       .then(questions => {
-        // console.log('Questions coming from DB: ', questions);
         const questionArray = questions.map(question => ({
           question: question.question,
           answer: question.answer

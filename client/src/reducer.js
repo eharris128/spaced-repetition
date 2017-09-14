@@ -1,12 +1,6 @@
-// import { LOGOUT_USER, LOGIN_USER } from "./actions/types";
 import { RESTART_APP, RESET_STATE } from "./actions/types";
 
 const initialState = { 
-  auth: false, 
-  questionOneScore: 0, 
-  questionTwoScore: 0, 
-  questionThreeScore: 0, 
-  questionFourScore: 0, 
   restartApplication: null
 }
 
