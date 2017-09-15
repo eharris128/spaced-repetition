@@ -1,8 +1,6 @@
-# Space Repetition Starter Kit
+# Space Repetition Capstone
 
-This should get you started with your Spaced Repetition app. We're giving you your basic directory structure, and the framework for authentication. However, we aren't persisting any information, and it will be your job to add Mongo/Mongoose. There are helpful comments in `server/index.js`.
-
-In development, the starter kit runs two servers. One of which is from `create-react-app`, so you get all the fancy hot reloading, etc, the other is the backend. In production, we generate a static folder with all our React stuff, and serve that with Express.
+Live version at: https://tranquil-lake-52213.herokuapp.com/
 
 ## Getting started
 
@@ -24,68 +22,47 @@ $ npm install
 
 You can run it locally now with `npm run dev`, but the Github OAuth stuff won't work without your own credentials.
 
-### Get Github OAuth Credentials
+## Description
+- Simple learning app using a spaced repetition technique for helping users to prep for their Data Structures and Algorithms interview.
 
-### For development
+### MVP Features
+1. Spaced repetition algorithm
+2. GitHub OAuth
 
-Visit https://github.com/settings/developers
+### Stretch Goals / 
+- Google OAuth
+- User generated material
 
-Click 'Register a new application'
+### User Stories
+_A user should be able to:_
+- Log into the app using OAuth on the landing page
+- Can understand how the app works by reading the info on the landing page
+- Clicking "Start" on the landing page directs the users to the Main page where it displays the 1st question
+- Users is presented with 2 cards,
+   - 1st Card: a single question,
+   - 2nd Card: a text field and submit button
+- User submit answer, both cards flip
+   - 1st Card: displays right answer
+   - 2nd Card: display difficulty options (3 buttons: easy, med, hard)
+- After submitting difficulty option, user moves on to the next question 
+- Once User has completed the questions correctly,
+   - 2nd card is removed
+   - 1st Card displays user's score and completion message
+   - Start Again button, which directs user to the 1st questions, resets score
+- Can log out of the session, returns to landing page
+- User can log back in and return to last question worked on
 
-- Add `http://localhost:8080` as Homepage URL
-- Add `http://localhost:8080/api/auth/github/callback` as Authorization callback URL
-- Click 'Register application'
+### Views
+- Landing page / login
+- Main Page
 
-You should get a Client ID and Secret.
+### Wireframe
+[google drive](https://goo.gl/VxpmNT))
 
-Back in your project locally, create an `secret.js` file in the `/server` directory:
-
-(Use the client ID and secret we just got from Github)
-
-```js
-module.exports = {
-  CLIENT_ID: 'yourId123',
-  CLIENT_SECRET: 'yoursecret'
-}
-```
-
-This file is in ignored by git because it is in your `.gitignore`. Never commit or push 'secret.js', the client id and secret need to be kept safe like a password.
-
-### Local Development
-
-```sh
-  npm run dev
-```
-
-## Deployment to Heroku
-
-```sh
-$ heroku create
-```
-
-Configure your Github client id and secret on Heroku:
-
-```sh
-$ heroku config:set CLIENT_ID=yourId123 CLIENT_SECRET=yoursecret
-```
-
-(You can also do this on dashboard.heroku.com under your app's settings.)
-
-### To deploy:
-
-```sh
-$ git push heroku master
-```
-
-Your app should be live on Heroku soon, but if you try to `Log in with Github`, you will get an error. Take note of your new app's URL.
-
-#### Create another set of Github OAuth credentials
-
-To fix this, go back to the (Github API Dashboard)[https://github.com/settings/developers] and:
-
-(You might need to use `http` (not `https`) for your Heroku URLs)
-
-- Add `http://your-app-name-123.herokuapp.com` to Homepage URL
-- Add `http://your-app-name-123.herokuapp.com/api/auth/github/callback` to Authorization callback URL
-
-Try to log in  `Log in with Github` again, and you're golden!
+### What are we using?
+* React
+* Redux
+* Node.js
+* Travis CI
+* Heroku
+* mlab
