@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import {resetState} from '../actions/index';
 const { LinkedList } = require("../LinkedList");
 const initialState = {
-  questions: [],
   questionList: null,
   currentAnswer: null,
   feedback: null,
@@ -130,7 +129,6 @@ export class QuestionPage extends React.Component {
 
   render() {
     let feedback, question, inputForm, infoModal;
-
     const accessToken = Cookies.get("accessToken");
 
     if (this.state.currentQuestion && !this.state.feedback && accessToken) {
@@ -158,7 +156,6 @@ export class QuestionPage extends React.Component {
         <form onSubmit={e => this.submitUserAnswer(e)}>
           <input autoFocus
           className="s2"
-          id="form-font-size"
             aria-label="your answer"
             id="userInput"
             type="text"
@@ -173,7 +170,7 @@ export class QuestionPage extends React.Component {
       infoModal = (
         <div className="landing">
           <h3>
-            Welcome to <strong>Study Hard</strong>! This application is using Spaced Repetition to help you better understand Data Structures and Algorithms. Please login to begin
+            Welcome to <span className="bold">Study Hard</span>! This application is using Spaced Repetition to help you better understand Data Structures and Algorithms. Please login to begin
             studying.
           </h3>
         </div>
@@ -202,7 +199,6 @@ export class QuestionPage extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  restartApp: state.restartApplication,
-  currentUser: state.currentUser
+  restartApp: state.restartApplication
 });
 export default connect(mapStateToProps)(QuestionPage);
