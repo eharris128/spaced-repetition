@@ -34,3 +34,6 @@ textarea.materialize-textarea:focus:not([readonly]) {
  .question-container {
   padding-top: 20px;
 } 
+.bold {
+  font-weight: 700;
+}
