@@ -11,9 +11,9 @@ class Result extends React.Component {
 
     render(){
       return (
-        <div className="results card">
+        <div className="results">
             <p>You are done.</p>
-            <button autoFocus className="btn button blue" onClick={e => this.goToStart(e)}>Start Over</button>
+             <button autoFocus className="btn button blue" onClick={e => this.goToStart(e)}>Start Over</button> 
         </div>
       )
     }

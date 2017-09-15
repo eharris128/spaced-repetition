@@ -18,6 +18,7 @@ export class QuestionPage extends React.Component {
     this.state = initialState;
   }
 
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.restartApp && !this.props.restartApp) {
       this.setState({
@@ -139,7 +140,7 @@ export class QuestionPage extends React.Component {
       feedback = (
         <div className="right-answer">
           <p>Correct Answer. Great Job!</p>
-          <button className="btn button blue" autoFocus onClick={e => this.goToNext(e)}>Go to next question.</button>
+          <button className="btn button blue" autoFocus onClick={e => this.goToNext(e)}>Next question</button>
         </div>
       );
     }
@@ -148,7 +149,7 @@ export class QuestionPage extends React.Component {
         <div className="wrong-answer">
           <p>Incorrect. Keep studying.</p>
           <p>The correct answer is: '{this.state.currentAnswer}'</p>
-          <button className="btn blue" autoFocus onClick={e => this.goToNext(e)}>Go to next question.</button>
+          <button className="btn blue" autoFocus onClick={e => this.goToNext(e)}>Next question</button>
         </div>
       );
     }
@@ -181,8 +182,8 @@ export class QuestionPage extends React.Component {
 
     if (!this.state.resultPage) {
       return (
-        <div className="question-coontainer">
-          <div className="user-input-coontainer">
+        <div className="question-container">
+          <div className="user-input-container">
             {infoModal}
             {question}
             {inputForm}
@@ -192,8 +193,8 @@ export class QuestionPage extends React.Component {
       );
     } else if (this.state.resultPage === true) {
       return (
-        <div className="question-coontainer">
-          <div className="user-input-coontainer">{<Result />}</div>
+        <div className="question-container">
+          <div className="user-input-container">{<Result />}</div>
         </div>
       );
     }

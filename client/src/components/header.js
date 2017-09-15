@@ -7,11 +7,11 @@ class Header extends Component {
   renderContent() {
     return !this.props.currentUser ? (
       <li>
-        <a href="/api/auth/github">Login With GitHub</a>
+        <a className='user-log' href="/api/auth/github">Login With GitHub</a>
       </li>
     ) : (
       <li>
-        <a href="/api/auth/logout">Logout</a>
+        <a className='user-log' href="/api/auth/logout">Logout</a>
       </li>
     );
   }

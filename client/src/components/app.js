@@ -3,7 +3,6 @@ import * as Cookies from 'js-cookie';
 import Header from './header';
 import QuestionPage from './question-page';
 import LoginPage from './login-page';
-// import Result from './result-page';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 class App extends React.Component {
@@ -15,7 +14,6 @@ class App extends React.Component {
     }
 
     componentWillMount() {
-        // Job 4: Redux-ify all of the state and fetch calls to async actions.
         const accessToken = Cookies.get('accessToken');
         if (accessToken) {
             fetch('/api/me', {
@@ -25,8 +23,6 @@ class App extends React.Component {
             }).then(res => {
                 if (!res.ok) {
                     if (res.status === 401) {
-                        // Unauthorized, clear the cookie and go to
-                        // the login page
                         Cookies.remove('accessToken');
                         return;
                     }
