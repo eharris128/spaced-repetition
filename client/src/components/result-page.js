@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { restartApp } from '../actions/index';
 
-class Result extends React.Component {
+export class Result extends React.Component {
 
   goToStart(e) {
     e.preventDefault();

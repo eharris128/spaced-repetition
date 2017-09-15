@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import "materialize-css";
 import "materialize-css/dist/css/materialize.min.css";
 
-class Header extends Component {
+export class Header extends Component {
   renderContent() {
     return !this.props.currentUser ? (
       <li>

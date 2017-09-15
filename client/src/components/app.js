@@ -5,7 +5,7 @@ import QuestionPage from './question-page';
 import LoginPage from './login-page';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-class App extends React.Component {
+export class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
