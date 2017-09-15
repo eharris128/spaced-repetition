@@ -133,7 +133,7 @@ export class QuestionPage extends React.Component {
 
     const accessToken = Cookies.get("accessToken");
 
-    if (this.state.currentQuestion && !this.state.feedback) {
+    if (this.state.currentQuestion && !this.state.feedback && accessToken) {
       question = <div className="question">{this.state.currentQuestion}</div>;
     }
     if (this.state.feedback === "correct") {
