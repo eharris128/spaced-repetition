@@ -15,6 +15,7 @@ export class App extends React.Component {
 
     componentWillMount() {
         const accessToken = Cookies.get('accessToken');
+        console.log('Our access token: ', accessToken)
         if (accessToken) {
             fetch('/api/me', {
                 headers: {

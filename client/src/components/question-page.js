@@ -9,7 +9,8 @@ const initialState = {
   currentAnswer: null,
   feedback: null,
   currentQuestion: null,
-  resultPage: null
+  resultPage: null,
+  demoLoginComplete: false
 };
 export class QuestionPage extends React.Component {
   constructor(props) {
@@ -83,6 +84,35 @@ export class QuestionPage extends React.Component {
     }
   }
 
+  fetchQuestions() {
+    console.log('Only fetch once? UserId for auth: ', this.props.userId);
+    if (!this.state.demoLoginComplete) {
+      fetch("/api/post", {
+        headers: {
+          Authorization: `Bearer ${this.props.userId}`
+        }
+      })
+        .then(res => {
+          if (!res.ok) {
+            throw new Error(res.statusText);
+          }
+          return res.json();
+        })
+        .then(questions => {
+          let questionList = new LinkedList();
+          for (let i = 0; i < questions.questions.length; i++) {
+            questionList.insert(i, questions.questions[i].question, questions.questions[i].answer);
+          }
+          this.setState({
+            questionList,
+            currentQuestion: questionList.head.question,
+            currentAnswer: questionList.head.answer,
+            demoLoginComplete: true
+          });
+        });
+
+    }
+  }
   goToNext(e) {
     e.preventDefault();
     let currentQuestionList = this.state.questionList;
@@ -128,9 +158,12 @@ export class QuestionPage extends React.Component {
   }
 
   render() {
+    console.log('Our state: ', this.props);
     let feedback, question, inputForm, infoModal;
     const accessToken = Cookies.get("accessToken");
-
+    if (this.props.userId && !this.state.demoLoginComplete) {
+      this.fetchQuestions();
+    }
     if (this.state.currentQuestion && !this.state.feedback && accessToken) {
       question = <div className="question">{this.state.currentQuestion}</div>;
     }
@@ -199,6 +232,8 @@ export class QuestionPage extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  restartApp: state.restartApplication
+  restartApp: state.restartApplication,
+  userId: state.userId
 });
+
 export default connect(mapStateToProps)(QuestionPage);

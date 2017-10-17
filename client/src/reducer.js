@@ -1,7 +1,8 @@
-import { RESTART_APP, RESET_STATE } from "./actions/types";
+import { RESTART_APP, RESET_STATE, USER_LOGIN} from "./actions/types";
 
 const initialState = { 
-  restartApplication: null
+  restartApplication: null,
+  userId: null
 }
 
 export default function(state, action) {
@@ -10,7 +11,10 @@ export default function(state, action) {
     case RESTART_APP:
       return {...state, restartApplication: true}
     case RESET_STATE:
-      return {...state, restartApplication: null}
+      return {...state, restartApplication: null, userId: null}
+    case USER_LOGIN:
+      console.log('userId: ', action);
+      return {...state, userId: action.userId}
     default:
       return state;
   }

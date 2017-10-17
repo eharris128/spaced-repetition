@@ -10,8 +10,9 @@ body {
 }
 h3 {
   font-family: 'Source Sans Pro', 'Princess Sofia', cursive;
-  color: rgba(238, 128, 150, 0.9);
+  /* color: rgba(238, 128, 150, 0.9); */
   margin: 0;
+  font-size: 2.5rem;
 }
 input[type=text]:not(.browser-default):focus:not([readonly]),
 textarea.materialize-textarea:focus:not([readonly]) {
