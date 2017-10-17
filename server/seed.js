@@ -40,4 +40,4 @@ const data = [{
 ];
 
 mongoose.connect(process.env.MONGO_URI);
-Questions.create(data).then(() => console.log('Wahoo'));
+Questions.create(data).then(() =>);
