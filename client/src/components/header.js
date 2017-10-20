@@ -19,7 +19,7 @@ export class Header extends Component {
     return (
       <nav className="nav-wrapper blue">
         <div>
-          <h2 className="brand-logo">Study Hard</h2>
+          <h3 className="app-brand-logo">Study Hard</h3>
           <ul className="right">{this.renderContent()}</ul>
         </div>
       </nav>
